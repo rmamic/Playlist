@@ -18,7 +18,7 @@ typedef struct music {
 
 Song Alokacija();
 void ProcitajDatoteku(Song);
-void DodajNovi(Song, char[], char[], char[]);
+int DodajNovi(Song, char[], char[], char[]);
 void DodajuDatoteku(char[], char[], char[]);
 void Ispis(Song);
 void Izbornik();
@@ -130,23 +130,27 @@ void ProcitajDatoteku(Song head)
 
 }
 
-void DodajNovi(Song head, char song[], char artist[], char hashtags[])
+int DodajNovi(Song head, char song[], char artist[], char hashtags[])
 {
-	Song novi = Alokacija();
-	if (!strcmp(song, "") || !strcmp(artist, "") || !strcmp(hashtags, ""))
+	if (!strcmp(song, "\n") || !strcmp(artist, "\n") || !strcmp(hashtags, "\n"))
 	{
-		return;
+		return 0;
+	}
+	else if (!strcmp(song, "") || !strcmp(artist, "") || !strcmp(hashtags, "")) {
+		return 1;
 	}
 	else
 	{
+		Song novi = Alokacija();
 		while (head->next != NULL)
 			head = head->next;
 		strcpy(novi->artist, artist);
 		strcpy(novi->hashtags, hashtags);
 		strcpy(novi->song, song);
 		head->next = novi;
-	}
 
+		return 1;
+	}
 }
 
 void Ispis(Song temp)
@@ -184,6 +188,9 @@ void DodajuDatoteku(char song[], char artist[], char hashtags[])
 	FILE* fp;
 	fp = fopen("playlist.txt", "a");
 
+	if (!fp)
+		return;
+
 	fputs(song, fp);
 
 	fputs(artist, fp);
@@ -199,6 +206,7 @@ bool DodajPjesmu(Song head)
 	char artist[MAX];
 	char hashtags[MAX];
 	char buff[5];
+	int br = 0;
 
 	printf("//Svaku rijec pjesame i izvodaca pisite velikim pocetnim slovom//\n");
 	printf("//Hashtagove pisite bez razmaka//\n\n");
@@ -211,10 +219,13 @@ bool DodajPjesmu(Song head)
 	printf("Unesite hashtagove: ");
 	fgets(hashtags, MAX, stdin);
 
-	DodajNovi(head, song, artist, hashtags);
-	DodajuDatoteku(song, artist, hashtags);
+	br = DodajNovi(head, song, artist, hashtags);
 
-	return true;
+	if (br == 1) {
+		DodajuDatoteku(song, artist, hashtags);
+		return true;
+	}
+	else return false;
 }
 
 void PretragaPoImenu(Song head, char buff[])
