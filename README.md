@@ -5,8 +5,11 @@ This C program allows users to manage a playlist through a simple console applic
 📌 Features
 
 ✅ Add new songs to the playlist
+
 ✅ Automatically save songs to the playlist.txt file
+
 ✅ Search songs by name, artist, or hashtags
+
 ✅ Display all songs in the playlist
 
 🛠️ Technologies
