@@ -37,10 +37,13 @@ The data is organized as a linked list, where each node represents a song.
 📜 Usage
 
 1️⃣ Run the program and select an option from the menu.
+
 2️⃣ When entering a song:
 
 Start each word in the song name and artist name with a capital letter.
 
 Enter hashtags without spaces.
+
 3️⃣ You can search by song name, artist, or hashtags.
+
 4️⃣ The playlist can be displayed at any time.
